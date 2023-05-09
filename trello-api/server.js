@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3006;
 const bodyParser = require("body-parser");
-const client = require("./database");
+const pool = require("./database");
 
 app.use(bodyParser.json());
 
@@ -14,15 +14,8 @@ app.get("/boards", (req, res) => {
   //baords?user_id=1;
   //const user_id = req.query.user_id;
   const user_id = req.query.user_id;
-  console.log(user_id);
-  client.getSession().then((session) => {
-    session
-      .sql("CALL trellodb.getBoards(?)")
-      .bind(parseInt(user_id))
-      .execute()
-      .then((result) => {
-        res.json(result.fetchAll());
-      });
+  pool.query("CALL getBoards(?)", [parseInt(user_id)], function (err, results) {
+    res.json(results);
   });
 });
 
@@ -31,15 +24,6 @@ app.get("/cards", (req, res) => {
   //req.query.board.id
   const board_id = req.query.board_id;
   console.log(board_id);
-  client.getSession().then((session) => {
-    session
-      .sql("CALL trellodb.getCards(?)")
-      .bind(parseInt(board_id))
-      .execute()
-      .then((result) => {
-        res.json(result.fetchAll());
-      });
-  });
 });
 ////
 app.post("/dasshboard/", (req, res) => {
@@ -48,16 +32,13 @@ app.post("/dasshboard/", (req, res) => {
   const table_desc = req.body.table_desc;
 
   //VALIDAR
-  client.getSession().then((session) => {
-    session
-      .sql("CALL trellodb.create_board(?,?,?)")
-      .bind(parseInt(user_id), table_name, table_desc)
-      .execute();
-  });
+
+  // .sql("CALL trellodb.create_board(?,?,?)")
 
   res.send("HE");
 });
 
-//respuestas de la pagina a los request///
+//respuestas de la pagina a los request//
+//Respuesta//
 
 app.listen(port, () => {});

@@ -1,25 +1,24 @@
-const msqx = require("@mysql/xdevapi");
 //createConnection , tenemos que  abrir y cerrar conecciones.
 //pool permite multiple conneccion  sin necesidad de abrir cerrar ya que lo manejara por nosotros.
 //en el pool en vez de cerrar la conexion se espera a que otro susuario se conecte a ella mejorando el rendimiento.
 
-const mysqlx = require("@mysql/xdevapi");
+const mysql2 = require("mysql2");
 
-const client = mysqlx.getClient(
-  "mysqlx://root:200400672@localhost:33060/trellodb",
-  {
-    pooling: { maxSize: 10 },
-  }
-);
+const pool = mysql2.createPool({
+  host: "localhost",
+  user: "root",
+  password: "200400672",
+  database: "trellodb",
+  port: "3306",
 
-client.getSession().then((session) => {
-  console.log(session.inspect());
-
-  const query = session
-    .sql("SELECT  * FROM USERS")
-    .execute()
-    .then((result) => {});
-
-  return session.close(); // the connection becomes idle in the client pool
+  connectionLimit: 10, // 连接池数
+  queueLimit: 4, // 排队限制
 });
-module.exports = client;
+
+const promisePool = pool.promise();
+pool.getConnection((err, connection) => {
+  if (err) throw err;
+  console.log("Database connected successfully");
+  connection.release();
+});
+module.exports = pool;
