@@ -27,16 +27,19 @@ app.get("/boards", async (req, res) => {
 });
 
 app.post("/cards", async (req, res) => {
-  res.send("ok");
-  for (const key in req.body) {
-    console.log(req.body[key]);
-    const body = req.body[key];
-    const name = body.name;
-    const description = body.description;
-    const list_id = parseInt(body.list_id);
-    const position = parseInt(body.position);
-    card_service.add_card(name, description, list_id, position); //
-  }
+  try {
+    await card_service.delete_All_Cards();
+    for (const key in req.body) {
+      console.log(req.body[key]);
+      const body = req.body[key];
+      const name = body.name;
+      const description = body.description;
+      const list_id = parseInt(body.list_id);
+      const position = parseInt(body.position);
+      await card_service.add_card(name, description, list_id, position); //
+    }
+    res.send(card_service.getCards(1));
+  } catch (error) {}
 });
 app.get("/cards", async (req, res) => {
   //cards?board_id=1;
@@ -51,6 +54,27 @@ app.get("/cards", async (req, res) => {
   }
 });
 ////
+app.put("/cards", async (req, res) => {
+  try {
+    const card_id = req.body.id;
+    const name = req.body.name;
+    const description = req.body.description;
+    await card_service.update_card(card_id, name, description);
+    res.send("ok");
+  } catch (error) {
+    res.send("fatal error");
+  }
+});
+
+app.delete("/cards", async (req, res) => {
+  if (validate.isInteger(req.params.card_id)) {
+    res.send("OK");
+    await card_service.delete_Card();
+  }
+
+  res.send("FATALL ERROR INCORRECT VALUE");
+});
+
 app.post("/dasshboard/", (req, res) => {
   const user_id = req.body.user_id;
   const table_name = req.body.table_name;
@@ -60,7 +84,7 @@ app.post("/dasshboard/", (req, res) => {
 
   // .sql("CALL trellodb.create_board(?,?,?)")
 
-  res.send("HE");
+  res.send("ok");
 });
 
 //respuestas de la pagina a los request//
