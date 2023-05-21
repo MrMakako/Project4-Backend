@@ -19,7 +19,7 @@ async function update_card(card_id, name, description) {
 }
 
 async function getCards(board_id) {
-  const result = await pool.query("Call getCards(?)", [board_id]);
+  const result = await pool.query("Call getCards_f(?)", [board_id]);
   return result;
 }
 

@@ -9,7 +9,7 @@ const pool = mysql2
     port: "3306",
 
     connectionLimit: 10, // 连接池数
-    queueLimit: 4, // 排队限制
+    queueLimit: 4, // 排队限制 𐐘💥╾━╤デ╦︻ඞා
   })
   .promise();
 
