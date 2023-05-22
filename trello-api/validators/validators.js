@@ -24,4 +24,4 @@ function isEmail(email) {
 
 function isPassword() {}
 
-module.exports = { isInteger, isEmail };
+module.exports = { isInteger, isEmail, isPassword };
