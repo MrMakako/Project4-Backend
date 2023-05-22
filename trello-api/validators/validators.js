@@ -1,3 +1,5 @@
+var validate = require("validate.js");
+
 function isInteger(value) {
   const conv_value = parseInt(value);
 
@@ -8,4 +10,18 @@ function isInteger(value) {
   }
 }
 
-module.exports = { isInteger };
+function isEmail(email) {
+  const rules = {
+    from: {
+      email: {
+        message: "doesn't look like a valid email",
+      },
+    },
+  };
+
+  console.log(validate({ from: email }, rules));
+}
+
+function isPassword() {}
+
+module.exports = { isInteger, isEmail };
