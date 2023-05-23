@@ -14,14 +14,32 @@ function isEmail(email) {
   const rules = {
     from: {
       email: {
-        message: "doesn't look like a valid email",
+        message: "error",
       },
     },
   };
-
   console.log(validate({ from: email }, rules));
+  return typeof validate({ from: email }, rules) === "undefined";
 }
 
-function isPassword() {}
+function isPassword(password) {
+  var constraints = {
+    password_f: {
+      presence: true,
+      format: {
+        pattern: "[a-z0-9]+",
+        flags: "i",
+        message: "error",
+      },
+
+      length: {
+        minimum: 6,
+        message: "error",
+      },
+    },
+  };
+  console.log(validate({ password_f: password }, constraints));
+  return typeof validate({ password_f: password }, constraints) === "undefined";
+}
 
 module.exports = { isInteger, isEmail, isPassword };

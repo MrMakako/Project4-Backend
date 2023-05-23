@@ -7,6 +7,8 @@ const board_service = require("./board_service");
 const card_service = require("./cards_service");
 const { IntegerType } = require("@mysql/xdevapi");
 const validate = require("./validators/validators");
+const { Http_Codes } = require("./utils/httpcodes");
+const crypto = require("crypto");
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
@@ -67,11 +69,54 @@ app.put("/cards", async (req, res) => {
   }
 });
 
+function hashPwd(salt, pwd) {
+  var hmac = crypto.createHmac("sha256", salt);
+  return hmac.update(pwd).digest("hex");
+}
+//Register request
 app.post("/register", async (req, res) => {
   try {
-    validate.isEmail(req.body.email);
-  } catch (error) {}
-  res.send("recived");
+    if (
+      validate.isPassword(req.body.password) &&
+      validate.isEmail(req.body.email)
+
+      ///code below will go under function register
+    ) {
+      const iterations = 100;
+      const KEY_LENGTH = 64;
+      //Generartin salt
+      const salt = crypto.randomBytes(128).toString("base64");
+      //Generating encrypted password
+      const ecncrypted_password = crypto.pbkdf2Sync(
+        req.body.password,
+        salt,
+        iterations,
+        KEY_LENGTH,
+        "sha256"
+      );
+      //process to authenticate password this is just fror testing
+      const pwd = crypto.pbkdf2Sync(
+        req.body.password,
+        salt,
+        iterations,
+        KEY_LENGTH,
+        "sha256"
+      );
+
+      // const pwd = hashPwd(salt, req.body.password);
+      //validating password
+      if (pwd.toString("base64") === ecncrypted_password.toString("base64")) {
+        console.log("VALIDATED ");
+      }
+
+      res.send(Http_Codes.OK);
+    } else {
+      res.send(Http_Codes["Bad Request"]);
+    }
+  } catch (error) {
+    console.log(error);
+    res.send("Error");
+  }
 });
 
 app.delete("/cards", async (req, res) => {
