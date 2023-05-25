@@ -3,13 +3,21 @@ const app = express();
 const port = 3006;
 const bodyParser = require("body-parser");
 const pool = require("./database");
-const board_service = require("./board_service");
-const card_service = require("./cards_service");
+//const board_service = require("./board_service");
+//const card_service = require("./cards_service");
 const { IntegerType } = require("@mysql/xdevapi");
 const validate = require("./validators/validators");
 const { Http_Codes } = require("./utils/httpcodes");
 const crypto = require("crypto");
+const { async } = require("validate.js");
 app.use(bodyParser.json());
+
+const cardRouter = require("./routes/card.routes");
+const boardRouter = require("./routes/board.routes");
+
+app.use("/cards", cardRouter);
+app.use("/boards", boardRouter);
+/*
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -69,10 +77,19 @@ app.put("/cards", async (req, res) => {
   }
 });
 
-function hashPwd(salt, pwd) {
-  var hmac = crypto.createHmac("sha256", salt);
-  return hmac.update(pwd).digest("hex");
-}
+//for login
+app.post("/login", async (req, res) => {
+  //generate
+  const accesToken = jwt.sign({ email }, process.env.TOKEN_KEY || "sad12", {
+    expiresIn: "1m",
+  });
+
+  //whenever we want to refresh our wbsite run these , the acces token neeeds to be stores in the front for later.
+  const refreshToken = jwt.sign({ email }, process.env.TOKEN_KEY || "sad12", {
+    expiresIn: "1m",
+  });
+});
+
 //Register request
 app.post("/register", async (req, res) => {
   try {
@@ -142,5 +159,6 @@ app.post("/dasshboard/", (req, res) => {
 
 //respuestas de la pagina a los request//
 //Respuesta//
+*/
 
 app.listen(port, () => {});
