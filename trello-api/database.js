@@ -4,7 +4,7 @@ const pool = mysql2
   .createPool({
     host: "localhost",
     user: "root",
-    password: "200400672",
+    password: "contra",
     database: "trellodb",
     port: "3306",
 

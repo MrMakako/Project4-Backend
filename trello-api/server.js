@@ -2,23 +2,25 @@ const express = require("express");
 const app = express();
 const port = 3006;
 const bodyParser = require("body-parser");
-const pool = require("./database");
+//const pool = require("./database");
 //const board_service = require("./board_service");
 //const card_service = require("./cards_service");
-const { IntegerType } = require("@mysql/xdevapi");
-const validate = require("./validators/validators");
-const { Http_Codes } = require("./utils/httpcodes");
-const crypto = require("crypto");
-const { async } = require("validate.js");
+//const { IntegerType } = require("@mysql/xdevapi");
+//const validate = require("./validators/validators");
+//const { Http_Codes } = require("./utils/httpcodes");
+//const crypto = require("crypto");
+//const { async } = require("validate.js");
 app.use(bodyParser.json());
 
 const cardRouter = require("./routes/card.routes");
 const boardRouter = require("./routes/board.routes");
+const userRouter = require("./routes/user.routes");
 
 app.use("/cards", cardRouter);
 app.use("/boards", boardRouter);
-/*
+app.use("", userRouter);
 
+/*
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
