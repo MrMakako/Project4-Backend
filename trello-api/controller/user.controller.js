@@ -32,19 +32,19 @@ async function register(req, res) {
         password: ""
       }
       */
-      const [newUserId] = await registerUser({
-        ...req.body,
-        encryptedPassword,
-        // salt: salt,
-        salt,
+      const newUserId = await registerUser({
+        email: email,
+        salt: salt,
+        password: encryptedPassword,
       });
 
       res.send({
         success: true,
-        newUserId,
+        user_email: newUserId.email,
       });
     }
   } catch (e) {
+    console.log(e);
     res.status(Http_Codes.INTERNAL_SERVER_ERROR).send({
       message: "Internal server error",
       detail: e.toString(),
