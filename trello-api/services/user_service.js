@@ -5,7 +5,7 @@ async function registerUser(user) {
   console.log(user.email, user.encryptedPassword, user.salt);
   await pool.query("Call createUser(?,?,?)", [
     user.email,
-    user.encryptedPassword,
+    user.password,
     user.salt,
   ]);
   return user;
