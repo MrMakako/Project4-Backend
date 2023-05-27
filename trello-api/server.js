@@ -18,7 +18,7 @@ const userRouter = require("./routes/user.routes");
 
 app.use("/cards", cardRouter);
 app.use("/boards", boardRouter);
-app.use("", userRouter);
+app.use("/user", userRouter);
 
 /*
 app.get("/", (req, res) => {
