@@ -1,10 +1,10 @@
 const mysql2 = require("mysql2");
-
+const dot = require("dotenv").config();
 const pool = mysql2
   .createPool({
     host: "localhost",
     user: "root",
-    password: "contra",
+    password: "200400672",
     database: "trellodb",
     port: "3306",
 

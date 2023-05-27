@@ -32,6 +32,7 @@ async function register(req, res) {
         password: ""
       }
       */
+
       const newUserId = await registerUser({
         email: email,
         salt: salt,
