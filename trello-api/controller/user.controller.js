@@ -72,13 +72,13 @@ async function login(req, res) {
     } else {
       const [credentials] = await getCredentials(email);
 
-      console.log("credentials", credentials);
+      //console.log("credentials", credentials);
       const encryptedPassword = crypto
-        .pbkdf2Sync(password, credentials.salt, 30000, 64, "sha256")
+        .pbkdf2Sync(password, credentials[0][0].salt, 30000, 64, "sha256")
         .toString("base64");
 
-      console.log("process.env.TOKEN_KEY", process.env.TOKEN_KEY);
-      if (encryptedPassword == credentials.password) {
+      //console.log("process.env.TOKEN_KEY", process.env.TOKEN_KEY);
+      if (encryptedPassword == credentials[0][0].password) {
         // generate
         const accessToken = jwt.sign(
           { email },
