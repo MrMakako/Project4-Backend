@@ -1,12 +1,13 @@
 const mysql2 = require("mysql2");
 const dot = require("dotenv").config();
+
 const pool = mysql2
   .createPool({
-    host: "localhost",
-    user: "root",
-    password: "200400672",
-    database: "trellodb",
-    port: "3306",
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+    port: process.env.PORT,
 
     connectionLimit: 10, // 连接池数
     queueLimit: 4, // 排队限制 𐐘💥╾━╤デ╦︻ඞා
