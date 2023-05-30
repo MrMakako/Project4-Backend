@@ -8,12 +8,10 @@ const pool = mysql2
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     port: process.env.PORT,
-
     connectionLimit: 10, // 连接池数
     queueLimit: 4, // 排队限制 𐐘💥╾━╤デ╦︻ඞා
   })
   .promise();
-
 module.exports = pool;
 //createConnection , tenemos que  abrir y cerrar conecciones.
 //pool permite multiple conneccion  sin necesidad de abrir cerrar ya que lo manejara por nosotros.

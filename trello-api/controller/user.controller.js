@@ -109,7 +109,6 @@ async function login(req, res) {
         });
       }
     }
-
   } catch (e) {
     // logging
     // writeFile(exception e)
