@@ -12,10 +12,10 @@ async function createBoard(req, res) {
 async function getBoards(req, res) {
   //baords?user_id=1;
   //const user_id = req.query.user_id;
-  const user_id = parseInt(req.query.user_id);
-  console.log(user_id);
-  if (validate.isInteger(user_id)) {
-    const result = await board_service.get_boards(user_id);
+  const user_email = req.body.email;
+  console.log(user_email);
+  if (validate.isEmail(user_email)) {
+    const result = await board_service.get_boards(user_email);
     res.json(result[0]);
   } else {
     res.send("invalid input");

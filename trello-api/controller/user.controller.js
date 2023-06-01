@@ -25,14 +25,6 @@ async function register(req, res) {
         .pbkdf2Sync(password, salt, 30000, 64, "sha256")
         .toString("base64");
 
-      // req.body
-      /*
-      {
-        email: ""
-        password: ""
-      }
-      */
-
       const newUserId = await registerUser({
         email: email,
         salt: salt,
@@ -101,6 +93,7 @@ async function login(req, res) {
           data: {
             accessToken,
             refreshToken,
+            email,
           },
         });
       } else {
