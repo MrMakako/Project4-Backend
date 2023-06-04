@@ -1,9 +1,14 @@
 const Http_Codes = require("../utils/Http_Codes");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const dot = require("dotenv").config();
 
 const { isEmail, isPassword } = require("../validators/validators");
-const { registerUser, getCredentials } = require("../services/user_service");
+const {
+  registerUser,
+  getCredentials,
+  logged_user,
+} = require("../services/user_service");
 
 async function register(req, res) {
   try {
@@ -75,19 +80,23 @@ async function login(req, res) {
         // generate
         const accessToken = jwt.sign(
           { email },
-          process.env.TOKEN_KEY || "AS4D5FF6G78NHCV7X6X5C",
+          process.env.ACCESSTOKEN_SECRET,
           {
-            expiresIn: "1d",
+            expiresIn: "30s",
           }
         );
 
         const refreshToken = jwt.sign(
           { email },
-          process.env.TOKEN_KEY || "AS4D5FF6G78NHCV7X6X5C",
+          process.env.REFRESH_TOKEN_SECRET,
           {
-            expiresIn: "1m",
+            expiresIn: "1d",
           }
         );
+
+        const currentUser = { email, refreshToken };
+        logged_user.push(currentUser);
+
         res.send({
           success: true,
           data: {
@@ -96,6 +105,8 @@ async function login(req, res) {
             email,
           },
         });
+
+        //store use in memory
       } else {
         res.status(Http_Codes.UNAUTHORIZED).send({
           message: "Contraseña incorrecta",
