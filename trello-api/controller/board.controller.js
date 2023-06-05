@@ -1,12 +1,17 @@
 const board_service = require("../services/board_service");
 const validate = require("../validators/validators");
-
+const Http_Codes = require("../utils/Http_Codes");
 async function createBoard(req, res) {
-  const user_id = req.body.user_id;
-  const table_name = req.body.table_name;
-  const table_desc = req.body.table_desc;
+  const user_id = req.user_id;
+  const table_name = req.body[0].name;
+  const table_desc = req.body[0].description;
 
-  res.send("ok");
+  try {
+    board_service.add_boards(user_id, table_name, table_desc);
+    res.sendStatus(Http_Codes.CREATED);
+  } catch (error) {
+    res.sendStatus(Http_Codes.BAD_REQUEST);
+  }
 }
 
 async function getBoards(req, res) {
