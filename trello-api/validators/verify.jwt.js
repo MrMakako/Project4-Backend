@@ -11,9 +11,9 @@ function verify_jwt(req, res, next) {
     if ((err, decoded)) {
       // console.log(err);
       if (err) res.sendStatus(403); //invalid token forbridden
-      req.user = decoded.email;
-      console.log(req.user);
-      next();
+      req.user_id = decoded.user_id;
+      console.log(req.user_id);
+      next(); //next r4eally important to send parameters in req to reoutes below this one
     } else {
       res.sendStatus(403);
     }

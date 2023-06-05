@@ -79,7 +79,7 @@ async function login(req, res) {
       if (encryptedPassword == credentials[0][0].password) {
         // generate
         const accessToken = jwt.sign(
-          { email },
+          { user_id: credentials[0][0].id },
           process.env.ACCESSTOKEN_SECRET,
           {
             expiresIn: "30s",
@@ -87,7 +87,7 @@ async function login(req, res) {
         );
 
         const refreshToken = jwt.sign(
-          { email },
+          { user_id: credentials[0][0].id },
           process.env.REFRESH_TOKEN_SECRET,
           {
             expiresIn: "1d",
@@ -102,7 +102,7 @@ async function login(req, res) {
           data: {
             accessToken,
             refreshToken,
-            email,
+            user_id: credentials[0][0].id,
           },
         });
 
