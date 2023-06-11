@@ -16,8 +16,11 @@ app.use("/user", userRouter);
 //verify will execute before going to routes below
 app.use("/jwt", refreshRouter);
 
-app.use(verify_jwt);
+
 app.use("/cards", cardRouter);
 app.use("/boards", boardRouter);
+
+//app.use(verify_jwt);
+
 
 app.listen(port, () => {});
