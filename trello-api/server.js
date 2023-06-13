@@ -11,16 +11,15 @@ const cardRouter = require("./routes/card.routes");
 const boardRouter = require("./routes/board.routes");
 const userRouter = require("./routes/user.routes");
 const refreshRouter = require("./routes/refresh.routes");
+const listRouter = require("./routes/list.routes");
 
 app.use("/user", userRouter);
 //verify will execute before going to routes below
-app.use("/jwt", refreshRouter);
+//app.use("/jwt", refreshRouter);
+app.use(verify_jwt);
 
-
+app.use("/lists", listRouter);
 app.use("/cards", cardRouter);
 app.use("/boards", boardRouter);
-
-//app.use(verify_jwt);
-
 
 app.listen(port, () => {});

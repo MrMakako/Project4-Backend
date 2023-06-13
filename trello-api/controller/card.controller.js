@@ -2,7 +2,7 @@ const card_service = require("../services/cards_service");
 const validate = require("../validators/validators");
 
 const getCards = async (req, res) => {
-  const board_id = parseInt(req.query.board_id);
+  const board_id = parseInt(req.headers["board_id"]);
   console.log(board_id);
   if (validate.isInteger(board_id)) {
     const result = await card_service.getCards(board_id);
