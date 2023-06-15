@@ -19,7 +19,10 @@ async function update_card(card_id, name, description) {
 }
 
 async function getCards(board_id) {
-  const result = await pool.query("Call getCards_f(?)", [board_id]);
+  const result = await pool.query(
+    "SELECT c.id,c.name,c.description,c.list_id,c.position FROM trellodb.lists l INNER JOIN trellodb.cards c WHERE l.board_id=? AND l.id= c.list_id ORDER BY c.position;",
+    [board_id]
+  );
   return result;
 }
 

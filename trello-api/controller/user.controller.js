@@ -82,7 +82,7 @@ async function login(req, res) {
           { user_id: credentials[0][0].id },
           process.env.ACCESSTOKEN_SECRET,
           {
-            expiresIn: "30s",
+            expiresIn: "1d",
           }
         );
 
