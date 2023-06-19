@@ -8,7 +8,7 @@ async function getBoards(user_id) {
 
 async function addBoards(user_id, name, description) {
   const result = await pool.execute(
-    "INSERT INTO `trellodb`.`boards (`name`,`user_id`, `description`, `creation_date` )VALUES ( name_p,id_p,description_p, CURRENT_DATE );",
+    "INSERT INTO `trellodb`.`boards (`name`,`user_id`, `description`, `creation_date` )VALUES ( ?,?,? CURRENT_DATE );",
     [name, user_id, description]
   );
 }
