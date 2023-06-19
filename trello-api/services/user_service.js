@@ -15,7 +15,10 @@ async function registerUser(user) {
 
 //𐐘🤝ඞ TeamWork
 const getCredentials = async (email) => {
-  const credentials = await pool.query("Call getCredentials(?)", [email]);
+  const credentials = await pool.query(
+    "SELECT u.salt, u.password,u.id FROM users u  WHERE u.email=?;",
+    [email]
+  );
   return credentials;
 };
 

@@ -17,7 +17,7 @@ async function refreshTokenHandler(req, res) {
         { user_id: user_id },
         process.env.ACCESSTOKEN_SECRET,
         {
-          expiresIn: "30s",
+          expiresIn: "1d",
         }
       );
       res.send({
