@@ -12,13 +12,15 @@ const getCards = async (req, res) => {
   }
 };
 const deleteCard = async (req, res) => {
-  if (validate.isInteger(req.query.card_id)) {
-    await card_service.delete_Card(req.query.card_id);
+  console.log(req.body);
+  if (validate.isInteger(req.body.card_id)) {
+    await card_service.delete_Card(req.body.card_id);
     res.send("OK");
+  } else {
+    res.send("FATALL ERROR INCORRECT VALUE");
   }
-
-  res.send("FATALL ERROR INCORRECT VALUE");
 };
+
 const updateCards = async (req, res) => {
   try {
     const card_id = req.body.id;
@@ -34,7 +36,7 @@ const addCards = async (req, res) => {
   // const card = req.body;
   // card.name
   try {
-    await card_service.delete_All_Cards();
+    // await card_service.delete_All_Cards();
     for (const key in req.body) {
       console.log(req.body[key]);
       const body = req.body[key];
