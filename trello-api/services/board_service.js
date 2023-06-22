@@ -14,10 +14,10 @@ async function addBoards(user_id, name, description) {
   ]);
 }
 
-async function deleteBoard(user_id, board_id) {
+async function deleteBoard(board_id) {
   const result = await pool.execute(
-    "DELETE FROM `trellodb`.`boards` b WHERE b.user_id= ? AND b.user_id= ?;",
-    [user_id, board_id]
+    "DELETE FROM `trellodb`.`boards` b WHERE b.id= ?;",
+    [board_id]
   );
 }
 

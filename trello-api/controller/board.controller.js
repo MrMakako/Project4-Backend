@@ -31,10 +31,9 @@ async function getBoards(req, res) {
 async function deleteBoard(req, res) {
   const user_id = req.user_id;
   const board_id = req.headers["board_id"];
-  console.log(user_id);
   console.log("Requesting deleteBoard");
-  if (validate.isInteger(user_id) && validate.isInteger(board_id)) {
-    board_service.deleteBoard(user_id, board_id);
+  if (validate.isInteger(board_id)) {
+    board_service.deleteBoard(board_id);
     const result = await res.send("Ok").status(Http_Codes.OK);
   } else {
     res.send("invalid input").status(Http_Codes.NOT_FOUND);
