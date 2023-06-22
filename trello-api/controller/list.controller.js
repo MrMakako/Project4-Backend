@@ -28,4 +28,18 @@ const addList = async (req, res) => {
   }
 };
 
-module.exports = { getLists, addList };
+const updateList = async (req, res) => {
+  try {
+    const list_name = req.body.list_name;
+    const list_id = req.body.list_id;
+    list_service.update_list(list_name, list_id);
+    res.status(HTTP_CODES.OK).send("Operation Finished");
+  } catch (error) {
+    console.log(error);
+    res
+      .status(HTTP_CODES.INTERNAL_SERVER_ERROR)
+      .send("May be the board doestn exist");
+  }
+};
+
+module.exports = { getLists, addList, updateList };

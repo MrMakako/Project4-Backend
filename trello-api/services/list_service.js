@@ -13,4 +13,11 @@ async function add_list(list_name, board_id) {
     [list_name, board_id]
   );
 }
-module.exports = { get_lists, add_list };
+
+async function update_list(list_name, list_id) {
+  return await pool.execute(
+    "UPDATE `trellodb`.`lists` SET `name` = ? WHERE `id` =?;",
+    [list_name, list_id]
+  );
+}
+module.exports = { get_lists, add_list, update_list };

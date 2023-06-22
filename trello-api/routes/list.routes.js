@@ -8,5 +8,6 @@ const { authenticateToken } = require("../auth/middleware");
 
 router.get("/all", listController.getLists);
 router.post("/new", listController.addList);
+router.put("/update", listController.updateList);
 //ready up
 module.exports = router;
