@@ -7,8 +7,11 @@ async function add_card(name, desc, list_id, position) {
   await pool.query("Call createCard(?,?,?,?)", [name, desc, list_id, position]);
 }
 
-async function delete_All_Cards() {
-  return await pool.query("call deleteAllcards()");
+async function delete_All_Cards(board_id, user_id) {
+  return await pool.query(
+    "DELETE FROM `trellodb`.`cards` WHERE cards.list_id IN ( SELECT ls.id  FROM ( SELECT br.id from trellodb.boards  as br where br.user_id=?  AND br.id=?) as br2 INNER JOIN trellodb.lists as ls ON ls.board_id=br2.id)  ;",
+    [user_id, board_id]
+  );
 }
 async function delete_Card(card_id) {
   await pool.query("call deleteCard(?)", [card_id]);

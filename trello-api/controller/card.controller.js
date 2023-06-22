@@ -33,8 +33,9 @@ const updateCards = async (req, res) => {
   }
 };
 const addCards = async (req, res) => {
+  const board_id = parseInt(req.headers["board_id"]);
   try {
-    await card_service.delete_All_Cards().then((rs) => {
+    await card_service.delete_All_Cards(board_id, req.user_id).then((rs) => {
       //en el body del request (rq.body) vienen nuestras Cards lo que hara este programa es elmeinar cada card y luego agregarlas todas de nuevo
       //ahora mi dessire ese position que tienen cambia cada vez
       for (const key in req.body) {
@@ -44,6 +45,7 @@ const addCards = async (req, res) => {
         const description = body.content;
         const list_id = parseInt(body.list_id);
         const position = body.position;
+
         card_service.add_card(name, description, list_id, position); //Ahora este position lo tenemos
       }
       res.status(201).send("OK");
