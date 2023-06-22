@@ -7,5 +7,6 @@ const { authenticateToken } = require("../auth/middleware");
 //router.get("/all", authenticateToken, cardController.getCards);
 
 router.get("/all", listController.getLists);
+router.post("/new", listController.addList);
 //ready up
 module.exports = router;
