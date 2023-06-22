@@ -31,22 +31,27 @@ const updateCards = async (req, res) => {
   }
 };
 const addCards = async (req, res) => {
-  // const card = req.body;
-  // card.name
   try {
-    await card_service.delete_All_Cards();
-    for (const key in req.body) {
-      console.log(req.body[key]);
-      const body = req.body[key];
-      const name = body.name;
-      const description = body.description;
-      const list_id = parseInt(body.list_id);
-      const position = parseInt(body.position);
-      await card_service.add_card(name, description, list_id, position); //
-    }
-    res.send(card_service.getCards(1));
-  } catch (error) {}
+    await card_service.delete_All_Cards().then((rs) => {
+      //en el body del request (rq.body) vienen nuestras Cards lo que hara este programa es elmeinar cada card y luego agregarlas todas de nuevo
+      //ahora mi dessire ese position que tienen cambia cada vez
+      for (const key in req.body) {
+        console.log(req.body[key]);
+        const body = req.body[key];
+        const name = body.name;
+        const description = body.content;
+        const list_id = parseInt(body.list_id);
+        const position = body.position;
+        card_service.add_card(name, description, list_id, position); //Ahora este position lo tenemos
+      }
+      res.status(201).send("OK");
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(403).send("Error occured when adding cards!");
+  }
 };
+//mira dessire aqui esta la funcion de addCard
 
 module.exports = {
   getCards,

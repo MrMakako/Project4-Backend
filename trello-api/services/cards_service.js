@@ -8,7 +8,7 @@ async function add_card(name, desc, list_id, position) {
 }
 
 async function delete_All_Cards() {
-  await pool.query("call deleteAllcards()");
+  return await pool.query("call deleteAllcards()");
 }
 async function delete_Card(card_id) {
   await pool.query("call deleteCard(?)", [card_id]);
